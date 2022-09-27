@@ -32,7 +32,27 @@ const Main = (props) => {
     getCheese()
   }
 
+  const updateCheese = async (cheese, id) => {
+    // make put request to create cheese
+    await fetch(URL + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(cheese),
+    });
+    // update list of cheeses
+    getCheese();
+  }
 
+  const deleteCheese = async id => {
+    // make delete request to remove a cheese
+    await fetch(URL + id, {
+      method: "DELETE",
+    })
+    // update list of cheeses
+    getCheese();
+  }
   useEffect(() => {
     getCheese();
   }, []);
@@ -50,6 +70,9 @@ const Main = (props) => {
           path="/cheese/:id"
           render={(rp) => (
             <Show
+              cheese={cheese}
+              updateCheese={updateCheese}
+              deleteCheese={deleteCheese}
               {...rp}
             />
           )}
